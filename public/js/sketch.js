@@ -11,7 +11,7 @@ class Sketch {
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0xeeeeee, 1);
         this.duration = opts.duration || 1;
-        this.debug = opts.debug || true
+        this.debug = opts.debug || false
         this.easing = opts.easing || 'easeInOut'
 
         this.clicker = document.getElementById("content");
@@ -198,7 +198,6 @@ class Sketch {
         this.time += 0.3;
         this.material.uniforms.time.value = this.time;
         // this is cool this.material.uniforms.progress.value = this.settings.progress;
-        console.log("render");
         console.log(this.material.uniforms.progress.value);
 
         Object.keys(this.uniforms).forEach((item) => {
