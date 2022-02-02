@@ -18,10 +18,12 @@ class Sketch {
 
 
         this.container = document.getElementById("slider");
-        let attribute = this.container.getAttribute('data-images');
-        console.log(attribute);
-        this.images = JSON.parse(attribute);
 
+        let attribute = this.container.getAttribute('data-images');
+        let colors = this.container.getAttribute('data-colors');
+
+        this.images = JSON.parse(attribute);
+        this.colors = JSON.parse(colors);
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
         this.container.appendChild(this.renderer.domElement);
@@ -40,8 +42,6 @@ class Sketch {
 
         this.paused = true;
         this.initiate(() => {
-            console.log(this.textures);
-            console.log("initiating");
             this.setupResize();
             this.settings();
             this.addObjects();
@@ -54,9 +54,14 @@ class Sketch {
     }
 
     initiate(cb) {
-        console.log("initiating");
         const promises = [];
         let that = this;
+        this.colors.forEach((color, i) => {
+            let promise = new Promise(resolve => {
+                that.colors[i] = document.getElementById("header").style.color = color;
+            });
+        })
+
         this.images.forEach((url, i) => {
             let promise = new Promise(resolve => {
                 that.textures[i] = new THREE.TextureLoader().load(url, resolve);
@@ -64,6 +69,7 @@ class Sketch {
             });
             promises.push(promise);
         })
+
 
         Promise.all(promises).then(() => {
             cb();
@@ -78,7 +84,6 @@ class Sketch {
     }
 
     settings() {
-        console.log("setting");
         let that = this;
         if (this.debug) this.gui = new dat.GUI();
         this.settings = {progress: 0.5};
@@ -184,7 +189,6 @@ class Sketch {
             value: 1,
             ease: Power2[this.easing],
             onComplete: () => {
-                console.log('FINISH');
                 this.current = (this.current + 1) % len;
                 this.material.uniforms.texture1.value = nextTexture;
                 this.material.uniforms.progress.value = 0;
@@ -198,11 +202,12 @@ class Sketch {
         this.time += 0.3;
         this.material.uniforms.time.value = this.time;
         // this is cool this.material.uniforms.progress.value = this.settings.progress;
-        console.log(this.material.uniforms.progress.value);
 
         Object.keys(this.uniforms).forEach((item) => {
             this.material.uniforms[item].value = this.settings[item];
+
         });
+
 
         //this.camera.position.z = 3;
        // this.plane.rotation.y = 0.1 * Math.sin(0.3 * this.time)
