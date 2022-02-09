@@ -16,14 +16,19 @@ body {
     --color-link-hover: #000;
     color: var(--color-text);
     background-color: var(--color-bg);
-    font-family: ABCMarfa-Light, sans-serif;
+    font-family: "ABCMarfa-Light", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 @font-face {
     font-family: "ABCMarfa-Light";
-    src: url("public/fonts/ABCMarfa-Light.woff") format('woff');
+    src: url("../fonts/ABCMarfa-Light.woff") format('woff');
+}
+
+@font-face {
+    font-family: "ABCMarfa-Light2";
+    src: url("../fonts/ABCMarfa-Light.woff2") format('woff2');
 }
 
 .demo-1 {
@@ -124,7 +129,7 @@ a:focus {
 }
 
 .frame {
-    padding: 3rem 5vw;
+    padding: 1rem 4vw;
     text-align: center;
     position: relative;
     z-index: 1000;
@@ -132,7 +137,7 @@ a:focus {
 
 .frame {
     padding-left: 1rem !important;
-
+    padding-top: 1rem !important;
 }
 
 .frame__title a {
@@ -285,7 +290,7 @@ a:active {
     text-decoration: none;
 }
 
-.impressum {
+.text__main {
     color: rgba(206, 0, 255, 0.99);
     font-size: 1.5rem;
     text-align: left;
